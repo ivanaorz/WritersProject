@@ -4,6 +4,6 @@ int main() {
 	std::cout << "Enter input ";
 	std::string input;
 	std::cin >> input;
-	std::cout << input;
+	std::cout << "Enter input ";
 	return 0;
 }
