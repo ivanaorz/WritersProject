@@ -18,6 +18,13 @@ void UserInterface::displayAccountMenu(string& username, string& password) {
     std::cin >> password;
 }
 
+void UserInterface::displayLoginMenu(string& username, string& password) {
+    std::cout << "\n===== Login Menu =====\n";
+    std::cout << "Enter your username: ";
+    std::cin >> username;
+    std::cout << "Enter your password: ";
+    std::cin >> password;
+}
 
 void UserInterface::displayBookEntryMenu() {
     std::cout << "1. Create book entry\n";
