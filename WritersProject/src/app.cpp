@@ -38,6 +38,7 @@ void App::run() {
             if (authentication.login(username, password)) {
                 isLoggedIn = true;
                 std::cout << "Login successful!\n";
+                ui.displayBookEntryMenu(); // after successful log in redirecting to book entry menu 
             }
             else {
                 std::cout << "Invalid username or password. Please try again.\n";

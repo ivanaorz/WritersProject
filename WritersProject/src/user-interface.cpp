@@ -27,6 +27,7 @@ void UserInterface::displayLoginMenu(string& username, string& password) {
 }
 
 void UserInterface::displayBookEntryMenu() {
+    std::cout << "\n===== Book entry Menu =====\n";
     std::cout << "1. Create book entry\n";
     std::cout << "2. Read all book entries\n";
     std::cout << "3. Update book entry\n";

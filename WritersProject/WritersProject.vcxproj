@@ -108,6 +108,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -129,6 +131,7 @@
   <ItemGroup>
     <ClCompile Include="src\app.cpp" />
     <ClCompile Include="src\authentication.cpp" />
+    <ClCompile Include="src\book-entry.cpp" />
     <ClCompile Include="src\file-service.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\user-interface.cpp" />
@@ -136,8 +139,13 @@
   <ItemGroup>
     <ClInclude Include="src\app.h" />
     <ClInclude Include="src\authentication.h" />
+    <ClInclude Include="src\book-entry.h" />
     <ClInclude Include="src\file-service.h" />
     <ClInclude Include="src\user-interface.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="book_entries.txt" />
+    <Text Include="users.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
