@@ -13,6 +13,12 @@ public:
     std::string getGenre() const;
     int getYear() const;
 
+    // Setter methods
+    void setTitle(const std::string& newTitle);
+    void setAuthor(const std::string& newAuthor);
+    void setGenre(const std::string& newGenre);
+    void setYear(int newYear);
+
 private:
     std::string title;
     std::string author;

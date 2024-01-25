@@ -38,3 +38,20 @@ std::string BookEntry::getGenre() const {
 int BookEntry::getYear() const {
     return year;
 }
+
+// Setter methods
+void BookEntry::setTitle(const std::string& newTitle) {
+    title = newTitle;
+}
+
+void BookEntry::setAuthor(const std::string& newAuthor) {
+    author = newAuthor;
+}
+
+void BookEntry::setGenre(const std::string& newGenre) {
+    genre = newGenre;
+}
+
+void BookEntry::setYear(int newYear) {
+    year = newYear;
+}

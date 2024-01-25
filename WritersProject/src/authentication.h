@@ -3,8 +3,8 @@
 
 class Authentication {
 public:
-    bool createAccount(const std::string& username, const std::string& password);
-    bool login(const std::string& username, const std::string& password);
+    std::string createAccount(const std::string& username, const std::string& password);
+    std::string login(const std::string& username, const std::string& password);
     void logout();
 
 
