@@ -4,14 +4,19 @@
 using std::string;
 
 void UserInterface::displayMainMenu() {
-    std::cout << "\n===== Writers Hub Menu =====\n";
+    std::cout << "---------------------------------------------------\n";
+    std::cout << "\n===== WRITERS HUB MENU =====\n";
+    std::cout << "                               \n";
     std::cout << "1. Create Account\n";
     std::cout << "2. Log in\n";
+    std::cout << "                               \n";
     std::cout << "===========================\n";
 }
 
 void UserInterface::displayAccountMenu(string& username, string& password) {
-    std::cout << "\n===== Create Account Menu =====\n";
+    std::cout << "---------------------------------------------------\n";
+    std::cout << "\n===== CREATE ACCOUNT MENU =====\n";
+    std::cout << "                               \n";
     std::cout << "Enter your username: ";
     std::cin >> username;
     std::cout << "Enter your password: ";
@@ -19,7 +24,8 @@ void UserInterface::displayAccountMenu(string& username, string& password) {
 }
 
 void UserInterface::displayLoginMenu(string& username, string& password) {
-    std::cout << "\n===== Login Menu =====\n";
+    std::cout << "---------------------------------------------------\n";
+    std::cout << "\n===== LOGIN MENU =====\n";
     std::cout << "Enter your username: ";
     std::cin >> username;
     std::cout << "Enter your password: ";
@@ -27,7 +33,8 @@ void UserInterface::displayLoginMenu(string& username, string& password) {
 }
 
 void UserInterface::displayBookEntryMenu() {
-    std::cout << "\n===== Book entry Menu =====\n";
+    std::cout << "---------------------------------------------------\n";
+    std::cout << "\n===== BOOK ENTRY MENU =====\n";
     std::cout << "1. Create book entry\n";
     std::cout << "2. Read all book entries\n";
     std::cout << "3. Update book entry\n";
@@ -36,6 +43,7 @@ void UserInterface::displayBookEntryMenu() {
 }
 
 void UserInterface::displayCreateBookEntryMenu(string& title, string& author, string& genre, int& year) {
+    std::cout << "---------------------------------------------------\n";
     std::cout << "\n===== Create Book Entry =====\n";
 
     // Clearing the input buffer before reading the title
@@ -53,12 +61,12 @@ void UserInterface::displayCreateBookEntryMenu(string& title, string& author, st
     std::cout << "Enter publication year: ";
     std::cin >> year;
 
-    // Clearing the input buffer to avoid issues with subsequent cin operations
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
 }
 
 void UserInterface::displayAllBookEntries(const std::vector<BookEntry>& entries) {
+    std::cout << "---------------------------------------------------\n";
     std::cout << "\n===== All Book Entries =====\n";
     for (const auto& entry : entries) {
         std::cout << "Title: " << entry.getTitle() << "\n";
@@ -70,6 +78,7 @@ void UserInterface::displayAllBookEntries(const std::vector<BookEntry>& entries)
 }
 
 void UserInterface::displayUpdateBookEntryMenu(string& title, string& author, string& genre, int& year) {
+    std::cout << "---------------------------------------------------\n";
     std::cout << "\n===== Update Book Entry =====\n";
 
     std::cout << "Enter new title: ";
@@ -84,7 +93,6 @@ void UserInterface::displayUpdateBookEntryMenu(string& title, string& author, st
     std::cout << "Enter new publication year: ";
     std::cin >> year;
 
-    // Clearing the input buffer to avoid issues with subsequent cin operations
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 

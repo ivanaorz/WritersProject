@@ -1,5 +1,6 @@
 #include "book-entry.h"
 #include <sstream>
+#include <iostream>
 
 BookEntry::BookEntry(const std::string& title, const std::string& author, const std::string& genre, int year)
     : title(title), author(author), genre(genre), year(year) {}
@@ -9,6 +10,7 @@ std::string BookEntry::serialize() const {
     oss << title << '|' << author << '|' << genre << '|' << year;
     return oss.str();
 }
+
 
 BookEntry BookEntry::deserialize(const std::string& data) {
     std::istringstream iss(data);
@@ -23,6 +25,8 @@ BookEntry BookEntry::deserialize(const std::string& data) {
     return BookEntry(title, author, genre, year);
 }
 
+
+// Getter methods
 std::string BookEntry::getTitle() const {
     return title;
 }

@@ -4,6 +4,10 @@
 class BookEntry {
 public:
     BookEntry(const std::string& title, const std::string& author, const std::string& genre, int year);
+   
+
+
+
     std::string serialize() const;
     static BookEntry deserialize(const std::string& data);
 
@@ -19,9 +23,12 @@ public:
     void setGenre(const std::string& newGenre);
     void setYear(int newYear);
 
+    
 private:
     std::string title;
     std::string author;
     std::string genre;
     int year;
+
 };
+

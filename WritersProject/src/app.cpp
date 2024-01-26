@@ -7,6 +7,7 @@
 
 #include "book-entry.h"
 #include "app.h"
+#include "file-service.h"
 
 using namespace std;
 using std::string;
@@ -16,7 +17,7 @@ App::App() : isRunning (true) {
 }
 
 void App::run() {
-   // bool isRunning = true;
+  
     bool isLoggedIn = false;  
 
     while (isRunning) {
@@ -94,41 +95,29 @@ void App::run() {
     }
 }
 
+
 void App::createBookEntry(const std::string& username) {
     std::string title, author, genre;
     int year;
     ui.displayCreateBookEntryMenu(title, author, genre, year);
     BookEntry newEntry(title, author, genre, year);
 
-    
-     // Adding the book entry to the user's entries
+    // Adding the book entry to the user's entries
     userBookEntries[username].push_back(newEntry);
 
-    FileService::writeBooksToFile("book_entries.txt", userBookEntries[username]);
-    std::cout << "Book entry created successfully!\n";
-
-    displayExitText();
-}
-
-void App::readAllBookEntries(const std::string& username) {
-    // Reading the entries specific to the logged-in user
-    auto& userEntries = userBookEntries[username];
-
-    // Checking if the user's entries are empty
-    if (userEntries.empty()) {
-        auto loadedEntries = FileService::readBooksFromFile("book_entries.txt");
-        userEntries.swap(loadedEntries); 
-    }
-
-    if (userEntries.empty()) {
-        std::cout << "No book entries available.\n";
+    // Saving the updated entries to file
+    FileService fileService;
+    if (fileService.writeBooksToFile("book_entries.txt", userBookEntries[username])) {
+        std::cout << "Book entry created successfully!\n";
     }
     else {
-        ui.displayAllBookEntries(userEntries);
+        std::cout << "Failed to write book entry to file.\n";
     }
 
     displayExitText();
 }
+
+
 
 // Trimming leading and trailing whitespaces from a string
 void trim(std::string& str) {
@@ -142,26 +131,62 @@ void trim(std::string& str) {
 }
 
 
-// Case-insensitive string comparison function 
+// Case-insensitive string comparison function with trim
 bool caseInsensitiveStringCompare(const std::string& str1, const std::string& str2) {
-    return std::equal(str1.begin(), str1.end(), str2.begin(), str2.end(),
+    std::string trimmedStr1 = str1;
+    std::string trimmedStr2 = str2;
+    trim(trimmedStr1);
+    trim(trimmedStr2);
+
+    return std::equal(trimmedStr1.begin(), trimmedStr1.end(), trimmedStr2.begin(), trimmedStr2.end(),
         [](char c1, char c2) {
             return std::tolower(c1) == std::tolower(c2);
         });
 }
 
 
+void App::readAllBookEntries(const std::string& username) {
+    // Reading the entries specific to the logged-in user
+    auto& userEntries = userBookEntries[username];
+
+    // Checking if the user's entries are empty
+    if (userEntries.empty()) {
+        auto loadedEntries = FileService::readBooksFromFile("book_entries.txt");
+        // Filtering entries for the current user
+        auto userFilteredEntries = std::remove_if(loadedEntries.begin(), loadedEntries.end(),
+            [username](const BookEntry& entry) {
+                return !caseInsensitiveStringCompare(entry.getAuthor(), username);
+            });
+        // Erasing the entries not belonging to the user
+        loadedEntries.erase(userFilteredEntries, loadedEntries.end());
+
+       
+        userEntries.swap(loadedEntries);
+    }
+
+    if (userEntries.empty()) {
+        std::cout << "No book entries available.\n";
+    }
+    else {
+        ui.displayAllBookEntries(userEntries);
+    }
+
+    displayExitText();
+}
+
+
+
 void App::updateBookEntry(const std::string& username) {
     if (userBookEntries[username].empty()) {
-        std::cout << "You don't have book entries yet.\n";
+        std::cout << "You cannot update because you don't have book entries yet.\n";
         return;
     }
 
-    std::string title, author, genre;
-    int year;
+    std::string title, author, genre; //MEMORY ALLOCATED ON STACK
+    int year; //MEMORY ALLOCATED ON STACK
 
     
-    ui.displayMessage("Choose the title of the book you want to update:");
+    ui.displayMessage("Write the title of the book you want to update:");
     std::cin.ignore(); // Ignoring any leftover newline characters
     std::getline(std::cin, title);
 
@@ -173,7 +198,7 @@ void App::updateBookEntry(const std::string& username) {
         });
 
     if (entryIterator != userEntries.end()) {
-        // After the book entry is found, update its information
+        
         ui.displayUpdateBookEntryMenu(title, author, genre, year);
         // Updating the book entry with the new information
         entryIterator->setTitle(title);
@@ -182,7 +207,8 @@ void App::updateBookEntry(const std::string& username) {
         entryIterator->setYear(year);
 
         // Saving the updated entries to file
-        FileService::writeBooksToFile("book_entries.txt", userEntries);
+        FileService fileService; //MEMORY ALLOCATED ON STACK
+        fileService.writeBooksToFile("book_entries.txt", userEntries);
         std::cout << "Book entry updated successfully!\n";
     }
     else {
@@ -196,11 +222,11 @@ void App::updateBookEntry(const std::string& username) {
 
 void App::deleteBookEntry(const std::string& username) {
     if (userBookEntries[username].empty()) {
-        std::cout << "You don't have book entries yet.\n";
+        std::cout << "You cannot delete because you don't have book entries yet.\n";
         return;
     }
 
-    std::string titleToDelete;
+    std::string titleToDelete; //MEMORY ALLOCATED ON STACK
     ui.displayMessage("Enter the title of the book entry you want to delete: ");
     std::cin.ignore(); // Ignoring any leftover newline characters
     std::getline(std::cin, titleToDelete);
@@ -216,7 +242,8 @@ void App::deleteBookEntry(const std::string& username) {
     if (entryIterator != userEntries.end()) {
         // Book entry is found, so, we need to erase it from the vector
         userEntries.erase(entryIterator);
-        FileService::writeBooksToFile("book_entries.txt", userEntries);
+        FileService fileService; //MEMORY ALLOCATED ON STACK
+        fileService.writeBooksToFile("book_entries.txt", userEntries);
         std::cout << "Book entry deleted successfully!\n";
     }
     else {
@@ -228,22 +255,28 @@ void App::deleteBookEntry(const std::string& username) {
 }
 
 void App::displayExitText() {
-    std::string exitChoice;
-    std::cout << "Type 'exit' to leave this menu: ";
-    std::cin >> exitChoice;
+    std::string exitChoice; //MEMORY ALLOCATED ON STACK
+    bool validChoice = false; //MEMORY ALLOCATED ON STACK
 
-    if (exitChoice == "exit") {
-        // Redirecting to the book entry menu
-        isLoggedIn = true;
-    }
-    else {
-        std::cout << "Invalid choice. Returning to the book entry menu anyway.\n";
-        // Redirecting to the book entry menu
-        isLoggedIn = true;
-    }
+    do {
+        std::cout << "Type 'exit' to leave this menu: ";
+        std::cin >> exitChoice;
+
+        if (exitChoice == "exit") {
+            // Redirecting to the book entry menu
+            isLoggedIn = true;
+            validChoice = true;  // Exiting the loop
+        }
+        else {
+            std::cout << "Invalid choice.\n";
+        }
+
+    } while (!validChoice);
+}
+
 
   
-}
+
 
 
 
