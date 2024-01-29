@@ -4,8 +4,15 @@
 class BookEntry {
 public:
     BookEntry(const std::string& title, const std::string& author, const std::string& genre, int year);
-   
 
+    // COPY CONSTRUCTOR
+    BookEntry(const BookEntry& other);
+
+    // ASSIGNMENT OPERATOR
+    BookEntry& operator=(const BookEntry& other);
+   
+    // DESTRUCTOR TO DELETE MEMORY
+    ~BookEntry();
 
 
     std::string serialize() const;
@@ -25,8 +32,8 @@ public:
 
     
 private:
-    std::string title;
-    std::string author;
+    std::string* title;
+    std::string* author;
     std::string genre;
     int year;
 
