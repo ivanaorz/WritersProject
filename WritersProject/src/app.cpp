@@ -97,8 +97,12 @@ void App::run() {
 
 
 void App::createBookEntry(const std::string& username) {
-    std::string title, author, genre;
+    std::string title;
+    std::string author;
+    std::string genre;
     int year;
+
+
     ui.displayCreateBookEntryMenu(title, author, genre, year);
     BookEntry newEntry(title, author, genre, year);
 
@@ -113,10 +117,9 @@ void App::createBookEntry(const std::string& username) {
     else {
         std::cout << "Failed to write book entry to file.\n";
     }
-
+   
     displayExitText();
 }
-
 
 
 // Trimming leading and trailing whitespaces from a string
