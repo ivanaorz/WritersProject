@@ -152,18 +152,21 @@ void App::readAllBookEntries(const std::string& username) {
     // Reading the entries specific to the logged-in user
     auto& userEntries = userBookEntries[username];
 
-    // Checking if the user's entries are empty
+    // Always load entries from the file
+    auto loadedEntries = FileService::readBooksFromFile("book_entries.txt");
+
+    // If user entries are empty, load from the file and filter
     if (userEntries.empty()) {
-        auto loadedEntries = FileService::readBooksFromFile("book_entries.txt");
-        // Filtering entries for the current user
+        // Filter entries for the current user
         auto userFilteredEntries = std::remove_if(loadedEntries.begin(), loadedEntries.end(),
             [username](const BookEntry& entry) {
                 return !caseInsensitiveStringCompare(entry.getAuthor(), username);
             });
-        // Erasing the entries not belonging to the user
+
+        // Erase the entries not belonging to the user
         loadedEntries.erase(userFilteredEntries, loadedEntries.end());
 
-       
+        // Update the user's entries
         userEntries.swap(loadedEntries);
     }
 
