@@ -28,7 +28,7 @@ std::vector<std::pair<std::string, std::string>> FileService::readUsersFromFile(
 }
 
 bool FileService::writeBooksToFile(const std::string& filename, const std::vector<BookEntry>& entries) {
-    std::ofstream file(filename, std::ios::out | std::ios::app);  
+    std::ofstream file(filename, std::ios::out | std::ios::app);
     if (file.is_open()) {
         for (const auto& entry : entries) {
             file << entry.serialize() << '\n';
@@ -40,8 +40,6 @@ bool FileService::writeBooksToFile(const std::string& filename, const std::vecto
         return false;
     }
 }
-
-
 
 
 std::vector<BookEntry> FileService::readBooksFromFile(const std::string& filename) {
