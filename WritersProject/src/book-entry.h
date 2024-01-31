@@ -10,7 +10,7 @@ public:
 
     // ASSIGNMENT OPERATOR
     BookEntry& operator=(const BookEntry& other);
-   
+
     // DESTRUCTOR TO DELETE MEMORY
     ~BookEntry();
 
@@ -30,7 +30,7 @@ public:
     void setGenre(const std::string& newGenre);
     void setYear(int newYear);
 
-    
+
 private:
     std::string* title;
     std::string* author;

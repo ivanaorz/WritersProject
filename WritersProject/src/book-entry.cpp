@@ -47,7 +47,7 @@ BookEntry BookEntry::deserialize(const std::string& data) {
     std::getline(iss, genre, '|');
     iss >> year;
 
-    return BookEntry(title, author, genre, year); 
+    return BookEntry(title, author, genre, year);
 }
 
 
