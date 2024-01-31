@@ -28,10 +28,15 @@ std::vector<std::pair<std::string, std::string>> FileService::readUsersFromFile(
 }
 
 bool FileService::writeBooksToFile(const std::string& filename, const std::vector<BookEntry>& entries) {
-    std::ofstream file(filename, std::ios::out | std::ios::app);
+    std::ofstream file(filename, std::ios_base::app);
     if (file.is_open()) {
+        std::vector<std::string> existingEntries = readExistingEntries(filename);
+
         for (const auto& entry : entries) {
-            file << entry.serialize() << '\n';
+            // Checking if the entry already exists in the file
+            if (std::find(existingEntries.begin(), existingEntries.end(), entry.serialize()) == existingEntries.end()) {
+                file << entry.serialize() << '\n';
+            }
         }
         file.close();
         return true;
@@ -40,7 +45,6 @@ bool FileService::writeBooksToFile(const std::string& filename, const std::vecto
         return false;
     }
 }
-
 
 std::vector<BookEntry> FileService::readBooksFromFile(const std::string& filename) {
     std::vector<BookEntry> entries;
@@ -54,4 +58,21 @@ std::vector<BookEntry> FileService::readBooksFromFile(const std::string& filenam
         file.close();
     }
     return entries;
+}
+
+
+std::vector<std::string> FileService::readExistingEntries(const std::string& filename) {
+    std::vector<std::string> existingEntries;
+    std::ifstream file(filename);
+    if (file.is_open()) {
+        std::string line;
+        while (std::getline(file, line)) {
+            // Checking if the line is not already in existingEntries
+            if (std::find(existingEntries.begin(), existingEntries.end(), line) == existingEntries.end()) {
+                existingEntries.push_back(line);
+            }
+        }
+        file.close();
+    }
+    return existingEntries;
 }

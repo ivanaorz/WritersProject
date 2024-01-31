@@ -95,7 +95,6 @@ void App::run() {
     }
 }
 
-
 void App::createBookEntry(const std::string& username) {
     std::string title;
     std::string author;
@@ -117,7 +116,6 @@ void App::createBookEntry(const std::string& username) {
     else {
         std::cout << "Failed to write book entry to file.\n";
     }
-   
     displayExitText();
 }
 
@@ -152,21 +150,21 @@ void App::readAllBookEntries(const std::string& username) {
     // Reading the entries specific to the logged-in user
     auto& userEntries = userBookEntries[username];
 
-    // Always load entries from the file
+
     auto loadedEntries = FileService::readBooksFromFile("book_entries.txt");
 
-    // If user entries are empty, load from the file and filter
+    
     if (userEntries.empty()) {
-        // Filter entries for the current user
+        // Filtering entries for the current user
         auto userFilteredEntries = std::remove_if(loadedEntries.begin(), loadedEntries.end(),
             [username](const BookEntry& entry) {
                 return !caseInsensitiveStringCompare(entry.getAuthor(), username);
             });
 
-        // Erase the entries not belonging to the user
+        // Erasing the entries not belonging to the user
         loadedEntries.erase(userFilteredEntries, loadedEntries.end());
 
-        // Update the user's entries
+        // Updating the user's entries
         userEntries.swap(loadedEntries);
     }
 
@@ -179,7 +177,6 @@ void App::readAllBookEntries(const std::string& username) {
 
     displayExitText();
 }
-
 
 
 void App::updateBookEntry(const std::string& username) {

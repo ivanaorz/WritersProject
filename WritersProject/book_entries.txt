@@ -1,4 +1,9 @@
-Cats|Denis Brown|drama|2015
-Flowers|Marta May|poetry|2020
-Cars|Denis Brown|fiction|2016
-Clouds|Marta May|drama|2021
+
+
+
+Cats|Denis|drama|2015
+Cars|Denis|fiction|2016
+Candies|Denis|poetry|2017
+Flowers|Marta|poetry|2020
+Clouds|Marta|drama|2021
+the red apples|Marta|detective|2022

@@ -10,4 +10,8 @@ public:
 
     bool writeBooksToFile(const std::string& filename, const std::vector<BookEntry>& entries);
     static std::vector<BookEntry> readBooksFromFile(const std::string& filename);
+
+private:
+    static std::vector<std::string> readExistingEntries(const std::string& filename);
 };
+
