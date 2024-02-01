@@ -4,6 +4,7 @@
 #include "file-service.h"
 #include <unordered_map>
 
+
 class App {
 public:
 
@@ -16,6 +17,7 @@ private:
     bool isLoggedIn;
     UserInterface ui;
     Authentication authentication;
+  
    
 
     // Changing entries to a map with username as key and vector of BookEntry as value
@@ -27,6 +29,7 @@ private:
     void updateBookEntry(const std::string& username);
     void deleteBookEntry(const std::string& username);
     void displayExitText();
+  
 
 
 };

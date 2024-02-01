@@ -18,6 +18,8 @@ public:
     std::string serialize() const;
     static BookEntry deserialize(const std::string& data);
 
+    
+
     // Getter methods
     std::string getTitle() const;
     std::string getAuthor() const;

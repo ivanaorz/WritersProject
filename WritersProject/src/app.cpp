@@ -153,7 +153,7 @@ void App::readAllBookEntries(const std::string& username) {
 
     auto loadedEntries = FileService::readBooksFromFile("book_entries.txt");
 
-    
+
     if (userEntries.empty()) {
         // Filtering entries for the current user
         auto userFilteredEntries = std::remove_if(loadedEntries.begin(), loadedEntries.end(),
@@ -188,7 +188,7 @@ void App::updateBookEntry(const std::string& username) {
     std::string title, author, genre; //MEMORY ALLOCATED ON STACK
     int year; //MEMORY ALLOCATED ON STACK
 
-    
+
     ui.displayMessage("Write the title of the book you want to update:");
     std::cin.ignore(); // Ignoring any leftover newline characters
     std::getline(std::cin, title);
@@ -201,7 +201,7 @@ void App::updateBookEntry(const std::string& username) {
         });
 
     if (entryIterator != userEntries.end()) {
-        
+
         ui.displayUpdateBookEntryMenu(title, author, genre, year);
         // Updating the book entry with the new information
         entryIterator->setTitle(title);

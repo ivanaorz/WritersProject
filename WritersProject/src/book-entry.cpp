@@ -84,3 +84,4 @@ void BookEntry::setGenre(const std::string& newGenre) {
 void BookEntry::setYear(int newYear) {
     year = newYear;
 }
+
