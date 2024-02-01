@@ -46,21 +46,6 @@ bool FileService::writeBooksToFile(const std::string& filename, const std::vecto
     }
 }
 
-std::vector<BookEntry> FileService::readBooksFromFile(const std::string& filename) {
-    std::vector<BookEntry> entries;
-    std::ifstream file(filename);
-    if (file.is_open()) {
-        std::string line;
-        while (std::getline(file, line)) {
-            BookEntry entry = BookEntry::deserialize(line);
-            entries.push_back(entry);
-        }
-        file.close();
-    }
-    return entries;
-}
-
-
 std::vector<std::string> FileService::readExistingEntries(const std::string& filename) {
     std::vector<std::string> existingEntries;
     std::ifstream file(filename);
@@ -76,3 +61,20 @@ std::vector<std::string> FileService::readExistingEntries(const std::string& fil
     }
     return existingEntries;
 }
+
+std::vector<BookEntry> FileService::readBooksFromFile(const std::string& filename) {
+    std::vector<BookEntry> entries;
+    std::ifstream file(filename);
+    if (file.is_open()) {
+        std::string line;
+        while (std::getline(file, line)) {
+            BookEntry entry = BookEntry::deserialize(line);
+            entries.push_back(entry);
+        }
+        file.close();
+    }
+    return entries;
+}
+
+
+
